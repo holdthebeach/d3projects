@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="d3.min.js"></script>
+    </head>
+    <body>
+        <script type="text/javascript">
+            var circleData = [{"y":100, "color": "red"}, {"y":200, "color":"green"}, {"y":300, "color": "purple"}],
+                width = 600,
+                height = 600,
+                svgContainer = d3.select('body').append('svg')
+                                .attr('width', width)
+                                .attr('height', height),
+                circles = svgContainer.selectAll('circle')
+                            .data(circleData)
+                            .enter()
+                            .append('circle')
+                            .attr('cx', 200)
+                            .attr('cy', 60)
+                            .attr('r', 60);
+                circles.transition()
+                    .duration(5000)
+                    .attr('cx', function (d) { return d.y;})
+                    .attr('cy', 70)
+                    .attr('r', 20)
+                    .attr('fill', function (d) {return d.color;});
+                
+        </script>
+        <p>Hello!</p>
+    </body>
+</html>
