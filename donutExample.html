@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="d3/d3.min.js"></script>
+    </head>
+    <body>
+        <script type="text/javascript">            
+                var width = 600,
+                    height = 600,
+                    r = 200,
+                    p = Math.PI * 2,
+                    svgContainer = d3.select('body')
+                        .append('svg')
+                        .attr('width', width)
+                        .attr('height', height),
+                    group = svgContainer.append('g')
+                        .attr('transform', 'translate(300,300)'),
+                    arcFunction = d3.svg.arc()
+                        .outerRadius(r)
+                        .innerRadius(r-60)
+                        .startAngle(0)
+                        .endAngle(p),
+                    arc = group
+                        .append('path')
+                        .attr('d', arcFunction)
+                        .attr('fill', 'orange');
+                
+        </script>
+    </body>
+</html>

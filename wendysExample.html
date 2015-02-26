@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="d3/d3.min.js"></script>
+    </head>
+    <body>
+        <script type="text/javascript">            
+                var data = [510, 320, 200];
+            
+                var color = d3.scale.ordinal()
+                        .range(['red', 'yellow', 'brown']),
+                    width = 600,
+                    height = 600,
+                    r = 300,
+                    p = Math.PI * 2,
+                    svgContainer = d3.select('body')
+                        .append('svg')
+                        .attr('width', width)
+                        .attr('height', height),
+                    group = svgContainer.append('g')
+                        .attr('transform', 'translate(300,300)'),
+                    arcFunction = d3.svg.arc()
+                        .outerRadius(r)
+                        .innerRadius(r-100),
+                    pieFunction = d3.layout.pie()
+                        .value(function (d) {return d;}),
+                    arc = group.selectAll('.arc')
+                        .data(pieFunction(data))
+                        .enter()
+                        .append('g')
+                        .attr('class', 'arc')
+                    arcPath = arc.append('path')
+                        .attr('d', arcFunction)
+                        .attr('fill', function (d) {return color(d.data);}),
+                    text = arc.append('text')
+                        .attr('transform', function (d) {return "translate(" + arcFunction.centroid(d) +")";})
+                        .attr('text-anchor', 'middle')
+                        .attr('font-size', 24)
+                        .text(function (d){
+                            return d.data + " calories";});
+                
+        </script>
+    </body>
+</html>

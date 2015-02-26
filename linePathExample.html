@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="d3/d3.min.js"></script>
+    </head>
+    <body>
+        <script type="text/javascript">            
+                var data = [{"x": 100, "y":100}, {"x": 300, "y": 300}, {"x": 100, "y": 200}, {"x": 500, "y": 500}, {"x": 100, "y": 400}, {"x": 600, "y": 600}],
+                    width = 600,
+                    height = 600,
+                    svgContainer = d3.select('body')
+                        .append('svg')
+                        .attr('width', width)
+                        .attr('height', height),
+                    lineFunction = d3.svg.line()
+                        .x(function (d) { return d.x;})
+                        .y(function (d) { return d.y;}),
+                    line = svgContainer.selectAll('path')
+                        .data([data])
+                        .enter()
+                        .append('path')
+                        .attr('d', lineFunction)
+                        .attr('fill', 'none')
+                        .attr('stroke', 'purple')
+                        .attr('stroke-width', 5);
+                
+        </script>
+    </body>
+</html>
