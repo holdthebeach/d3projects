@@ -1,0 +1,62 @@
+<html>
+<head>
+    <script src = "d3.min.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        var familyData = {
+                "name": "Maria",
+                "value": 100,
+                "children": [
+                    {"name": "Cathy",
+                     "value": 75,
+                    "children": 
+                     [
+                        {"name":"Yvette", "value": 25},
+                        {"name": "Patty", "value": 25},
+                        {"name": "Gavin", "value": 25}
+                     ]
+                    },
+                    {"name": "Ana",
+                     "value": 75,
+                     "children": 
+                     [
+                         {"name": "Perry", "value": 25},
+                         {"name": "Dani", "value": 25},
+                         {"name": "Stevie", "value": 25}
+                     ]
+                    }
+                ]
+            };
+        
+        var width = 800,
+            height = 600,
+            svgContainer = d3.select('body').append('svg')
+                .attr('width', width)
+                .attr('height', height)
+                .append('g')
+                .attr('transform', 'translate(50, 50)');
+        
+        var pack = d3.layout.pack()
+            .size([width, height - 50])
+            .padding(10);
+        
+        var nodes = pack.nodes(familyData);
+        
+        var node = svgContainer.selectAll('.node')
+            .data(nodes)
+            .enter()
+            .append('g')
+            .attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')';});
+        var nodeCircles = node.append('circle')
+            .attr('r', function (d) { return d.r;})
+            .attr('fill', 'blue')
+            .attr('opacity', 0.2);
+        var names = node.append('text')
+            .attr('fill', function (d) { return d.children ? 'black' : 'blue';})
+            .attr('text-anchor', 'middle')
+            .text(function (d) { return d.name;});
+
+    </script>
+</body>
+</html>

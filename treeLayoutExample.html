@@ -1,0 +1,71 @@
+<html>
+    <head>
+        <script src="d3.min.js"></script>
+    </head>
+    <body>
+        <script type="text/javascript">
+            var familyData = {
+                "name": "Maria",
+                "children": [
+                    {"name": "Cathy",
+                    "children": 
+                     [
+                        {name:"Yvette"},
+                        {"name": "Patty"},
+                        {"name": "Gavin"}
+                     ]
+                    },
+                    {"name": "Ana",
+                     "children": 
+                     [
+                         {"name": "Perry"},
+                         {"name": "Dani"},
+                         {"name": "Stevie"}
+                     ]
+                    },
+                    {"name": "Felix"}
+                ]
+            };
+            
+            var svgContainer = d3.select('body').append('svg')
+                    .attr('width', 700)
+                    .attr('height', 700)
+                    .append('g')
+                    .attr('transform', 'translate(50, 50)'),
+                treeLayout = d3.layout.tree()
+                    .size([500, 500]);
+            
+            var nodes = treeLayout.nodes(familyData); //nodes method runs tree layout and returns an array of the node objects
+            
+            var links = treeLayout.links(nodes);//links method expects nodes as input and returns objects with source and target nodes for each
+            
+            var node = svgContainer.selectAll('.node')
+                .data(nodes)
+                .enter()
+                .append('g') //appends a group for each object
+                .attr('class', 'node') 
+                .attr('transform', function (d) {return 'translate(' + d.y + ',' + d.x + ')';});
+                //transform places each node group based on the x and y pts populated by treeLayout.nodes, x and y are reveresed to rotate position of nodes
+            
+            var nodeCircle = node.append('circle')//adds a circle to each node object group
+                .attr('r', 5)
+                .attr('fill', 'blue');
+            
+            var diagonal = d3.svg.diagonal() //diagonal path generator
+                .projection(function (d) { return [d.y, d.x];});
+            
+            var link = svgContainer.selectAll('.link')
+                .data(links)
+                .enter()
+                .append('path')
+                .attr('fill', 'none')
+                .attr('stroke', 'grey')
+                .attr('d', diagonal); //path data is generated using links source and target data
+            
+            var labels = node.append('text')
+                .text(function (d) { return d.name;})
+                .attr('text-anchor', 'middle')
+                .attr('transform', 'translate(0, -10)');
+        </script>
+    </body>
+</html>
