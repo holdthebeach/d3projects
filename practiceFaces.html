@@ -1,0 +1,50 @@
+<html>
+<head>
+    <script src="d3.min.js"></script>
+</head>    
+<body>
+    <script type="text/javascript">
+        var happyData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+            circleData = [{x: 200, y: 200, r: 200, color: 'yellow'}, {x: 120, y: 125, r: 40, color: 'black'}, {x: 280, y: 125, r: 40, color: 'black'}, {x: 600, y: 200, r: 200, color: 'yellow'}],
+            lineData = [{x: 500, y: 200}, {x: 700, y:200}]
+            
+        var height = 800,
+            width = 1000,
+            r = 100,
+            p = Math.PI *2;
+        
+        var svgContainer = d3.select('body').append('svg')
+                .attr('height', height)
+                .attr('width', width)
+                .append('g')
+                .attr('transform', 'translate(50, 50)'),
+            head = svgContainer.selectAll('circle')
+                .data(circleData)
+                .enter()
+                .append('circle')
+                .attr('cx', function (d) { return d.x;} )
+                .attr('cy', function (d) { return d.y;} )
+                .attr('r', function (d) { return d.r;} )
+                .attr('fill', function (d) { return d.color;}),
+            arc = d3.svg.arc()
+                .innerRadius(r-10)
+                .outerRadius(r)
+                .startAngle(1.5)
+                .endAngle(p-1.5),
+            smile = svgContainer.append('g')
+                .attr('transform', 'translate(200, 250)')
+                .append('path')
+                .attr('fill', 'black')
+                .attr('d', arc),
+            line = d3.svg.line()
+                .x(function (d) { return d.x;}
+                .y(function(d) { return d.y;},
+            mouth = svgContainer.selectAll('path')
+                .data(lineData)
+                .enter()
+                .append('path')
+                .attr('stroke', 'black');
+             
+    </script>
+</body>
+</html>

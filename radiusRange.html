@@ -1,0 +1,44 @@
+<html>
+<head>
+    <script src="d3.min.js"></script>
+</head>
+<body>
+    <p>
+        <label for="nRadius" style="display: inline-block; width: 240px; text-align: center;">Radius = <span id="nRadius-value">...</span>
+        </label>
+        <input type="range" min="1" max="150" id="nRadius">
+    </p>
+    <script type="text/javascript">
+        var width = 600,
+            height = 300;
+        
+        var container = d3.select('body')
+            .append('svg')
+            .attr('width', width)
+            .attr('height', height);
+        
+        var circle = container.append('circle')
+            .attr('cx', 300)
+            .attr('cy', 150)
+            .attr('r', 120)
+            .style('fill', 'none')
+            .style('stroke', 'blue');
+        
+        update(75);
+        
+        d3.select('#nRadius').on('input', function(){
+           update(+this.value); 
+        });
+        
+        function update(nRadius){
+            
+            d3.select('#nRadius-value').text(nRadius);
+            d3.select('#nRadius').property('value', nRadius);
+            
+            container.selectAll('circle')
+                .attr('r', nRadius);
+        };
+        
+    </script>
+</body>
+</html>
